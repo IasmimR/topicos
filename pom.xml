@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>br.ufg.inf</groupId>
+	<artifactId>topicos</artifactId>
+	<version>0.0.0.1-SNAPSHOT</version>
+
+	<name>Tópicos - Trabalho Final</name>
+	<description>
+		Trabalho final da disciplina "Tópicos em Engenharia de Software", fazendo uso de ontologias como FOAF e ACM CS
+	</description>
+
+	<organization>
+		<name>INF/UFG - Instituto de Informática da Universidade Federal de Goiás</name>
+		<url>http://inf.ufg.br</url>
+	</organization>
+
+	<licenses>
+		<license>
+			<name>Copyright \u00A9 ${project.organization.name}</name>
+			<url>LICENSE</url>
+			<distribution>manual</distribution>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<id>bruno</id>
+			<name>Bruno César</name>
+			<email>bruno@brunocesar.com</email>
+			<organization>${project.organization.name}</organization>
+			<timezone>-3</timezone>
+		</developer>
+		<developer>
+			<id>danilo</id>
+			<name>Danilo Guimarães</name>
+			<email>danilo.seusaraiva@gmail.com</email>
+			<organization>${project.organization.name}</organization>
+			<timezone>-3</timezone>
+		</developer>
+		<developer>
+			<id>iasmim</id>
+			<name>Iasmim Ribeiro</name>
+			<email>programadoresifetrv@gmail.com</email>
+			<organization>${project.organization.name}</organization>
+			<timezone>-3</timezone>
+		</developer>
+		<developer>
+			<id>max</id>
+			<name>Maxwel Otsuka</name>
+			<email>maxwel.engsoft@gmail.com</email>
+			<organization>${project.organization.name}</organization>
+			<timezone>-3</timezone>
+		</developer>
+	</developers>
+
+	<properties>
+		<java.version>1.7</java.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		<log4j.level>DEBUG</log4j.level>
+
+		<!-- hibernate properties -->
+		<hibernate.show.sql>true</hibernate.show.sql>
+		<hibernate.format.sql>true</hibernate.format.sql>
+		<hibernate.use_sql_comments>true</hibernate.use_sql_comments>
+		<hibernate.generate_statistics>true</hibernate.generate_statistics>
+
+		<!-- dependencies version -->
+		<jstl.version>1.2</jstl.version>
+		<sl4j.version>1.7.5</sl4j.version>
+		<jena.version>2.11.0</jena.version>
+		<c3p0.version>0.9.2.1</c3p0.version>
+		<lombok.version>0.11.8</lombok.version>
+		<querydsl.version>3.2.4</querydsl.version>
+		<spring.version>3.2.4.RELEASE</spring.version>
+		<hibernate.version>4.2.7.Final</hibernate.version>
+		<spring.data.jpa.version>1.4.2.RELEASE</spring.data.jpa.version>
+		<spring.data.commons.version>1.5.1.RELEASE</spring.data.commons.version>
+
+		<!-- test dependencies version -->
+		<junit.version>4.11</junit.version>
+		<mockito.version>1.9.5</mockito.version>
+
+		<!-- plugins version -->
+		<maven-source-plugin.version>2.2.1</maven-source-plugin.version> <!-- http://maven.apache.org/plugins/maven-source-plugin/ -->
+		<maven-javadoc-plugin.version>2.9.1</maven-javadoc-plugin.version> <!-- http://maven.apache.org/plugins/maven-javadoc-plugin/ -->
+		<maven-release-plugin.version>2.3.2</maven-release-plugin.version> <!-- http://maven.apache.org/plugins/maven-release-plugin/ -->
+		<maven-compiler-plugin.version>3.1</maven-compiler-plugin.version> <!-- http://maven.apache.org/plugins/maven-compiler-plugin/ -->
+		<maven-resources-plugin.version>2.6</maven-resources-plugin.version><!-- http://maven.apache.org/plugins/maven-resources-plugin/ -->
+	</properties>
+
+	<profiles>
+		<profile>
+			<id>prod</id>
+			<properties>
+				<log4j.level>WARN</log4j.level>
+
+				<!-- hibernate properties -->
+				<hibernate.show.sql>false</hibernate.show.sql>
+				<hibernate.format.sql>false</hibernate.format.sql>
+				<hibernate.use_sql_comments>false</hibernate.use_sql_comments>
+				<hibernate.generate_statistics>false</hibernate.generate_statistics>
+			</properties>
+		</profile>
+		<profile>
+			<id>mysql</id>
+			<properties>
+				<jdbc.groupId>mysql</jdbc.groupId>
+				<jdbc.artifactId>mysql-connector-java</jdbc.artifactId>
+				<jdbc.version>5.1.6</jdbc.version>
+				<jdbc.driver>org.postgresql.Driver</jdbc.driver>
+				<jdbc.url>jdbc:mysql://localhost:5432/topicos</jdbc.url>
+				<jdbc.user>root</jdbc.user>
+				<jdbc.password></jdbc.password>
+				<hibernate.dialect>org.hibernate.dialect.MySQL5Dialect</hibernate.dialect>
+			</properties>
+		</profile>
+		<profile>
+			<id>postgresql</id>
+			<properties>
+				<jdbc.groupId>org.postgresql</jdbc.groupId>
+				<jdbc.artifactId>postgresql</jdbc.artifactId>
+				<jdbc.version>9.2-1003-jdbc4</jdbc.version>
+				<jdbc.driver>org.postgresql.Driver</jdbc.driver>
+				<jdbc.url>jdbc:postgresql://localhost:5432/topicos</jdbc.url>
+				<jdbc.user>postgres</jdbc.user>
+				<jdbc.password>postgres</jdbc.password>
+				<hibernate.dialect>org.hibernate.dialect.PostgreSQL82Dialect</hibernate.dialect>
+			</properties>
+		</profile>
+	</profiles>
+
+	<build>
+		<finalName>topicos</finalName>
+		<plugins>
+			<!-- http://maven.apache.org/plugins/maven-resources-plugin/ -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>${maven-resources-plugin.version}</version>
+			</plugin>
+
+			<!-- http://maven.apache.org/plugins/maven-compiler-plugin/ -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven-compiler-plugin.version}</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+
+			<!-- http://maven.apache.org/plugins/maven-source-plugin/ -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>${maven-source-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- http://maven.apache.org/plugins/maven-release-plugin/ -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>${maven-release-plugin.version}</version>
+			</plugin>
+		</plugins>
+	</build>
+
+	<reporting>
+		<plugins>
+			<!-- http://maven.apache.org/plugins/maven-javadoc-plugin/ -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>${maven-javadoc-plugin.version}</version>
+				<configuration>
+					<use>false</use>
+					<linksource>true</linksource>
+					<verbose>true</verbose>
+					<links>
+						<link>http://java.sun.com/javase/7/docs/api/</link>
+					</links>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
+
+	<dependencies>
+		<!-- jena dependencies -->
+		<dependency>
+			<groupId>org.apache.jena</groupId>
+			<artifactId>apache-jena-libs</artifactId>
+			<version>${jena.version}</version>
+			<type>pom</type>
+		</dependency>
+
+		<!-- database dependencies -->
+		<dependency>
+			<groupId>com.mchange</groupId>
+			<artifactId>c3p0</artifactId>
+			<version>${c3p0.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${jdbc.groupId}</groupId>
+			<artifactId>${jdbc.artifactId}</artifactId>
+			<version>${jdbc.version}</version>
+		</dependency>
+
+		<!-- logging dependencies -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${sl4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${sl4j.version}</version>
+		</dependency>
+
+		<!-- lombok for meta programming -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>0.11.6</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- test dependencies -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>${mockito.version}</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<scm>
+		<connection>scm:git:git@github.com:brunocesarsilva/topicos.git</connection>
+		<developerConnection>scm:git:git@github.com:brunocesarsilva/topicos.git</developerConnection>
+		<url>git@github.com:brunocesarsilva/topicos.git</url>
+	</scm>
+
+</project>
