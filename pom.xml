@@ -119,6 +119,9 @@
 		</profile>
 		<profile>
 			<id>postgresql</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
 			<properties>
 				<jdbc.groupId>org.postgresql</jdbc.groupId>
 				<jdbc.artifactId>postgresql</jdbc.artifactId>
