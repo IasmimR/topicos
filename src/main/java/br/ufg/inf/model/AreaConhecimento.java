@@ -1,4 +1,4 @@
-package br.inf.ufg.model;
+package br.ufg.inf.model;
 
 import lombok.Getter;
 import lombok.Setter;
